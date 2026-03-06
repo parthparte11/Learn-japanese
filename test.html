@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Flashcards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>にほんご</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="writing.html">Writing</a></li>
+                <li><a href="dictionary.html">Dictionary</a></li>
+                <li><a href="kanji.html">Kanji</a></li>
+                <li><a href="test.html">Test</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Flashcard Test</h2>
+        <div class="controls">
+            <label for="category">Choose category:</label>
+            <select id="category">
+                <option value="hiragana">Hiragana</option>
+                <option value="katakana">Katakana</option>
+                <option value="kanji">Kanji</option>
+                <option value="words">Words</option>
+            </select>
+            <button id="newCard">New Card</button>
+        </div>
+        <div class="flashcard" id="flashcard">
+            <div class="card-front" id="cardFront">?</div>
+            <div class="card-back" id="cardBack">?</div>
+        </div>
+        <button id="flipBtn">Flip</button>
+    </main>
+    <footer>
+        <p>&copy; 2025 Learn Japanese</p>
+    </footer>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary - Jisho Style</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional custom styles for the Jisho-like dictionary page */
+        .dictionary-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dictionary-header h2 {
+            border-bottom: none;
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-container {
+            background-color: #eef2f3;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-box-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            font-size: 1.1rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .search-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .example-searches {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .example-searches strong {
+            color: #2c3e50;
+        }
+
+        .example-searches a {
+            color: #2980b9;
+            text-decoration: none;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background-color: white;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            transition: all 0.2s;
+        }
+
+        .example-searches a:hover {
+            background-color: #ecf0f1;
+            border-color: #3498db;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .results-count {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        #dictionaryTable {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #dictionaryTable th {
+            background-color: #34495e;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        #dictionaryTable td {
+            padding: 1rem;
+        }
+
+        #dictionaryTable tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .japanese-word {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #7f8c8d;
+            font-style: italic;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>にほんご</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="writing.html">Writing</a></li>
+                <li><a href="dictionary.html">Dictionary</a></li>
+                <li><a href="kanji.html">Kanji</a></li>
+                <li><a href="test.html">Test</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="dictionary-header">
+            <h2>辞書 Jisho</h2>
+            <p>Powerful Japanese-English dictionary</p>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box-wrapper">
+                <input type="text" id="searchInput" placeholder="Search for a word, kanji, or phrase...">
+                <button class="search-btn" id="searchBtn">Search</button>
+            </div>
+            <div class="example-searches">
+                <strong>Example searches:</strong>
+                <a class="example-link">house</a>
+                <a class="example-link">食べる</a>
+                <a class="example-link">#jlpt-n5</a>
+                <a class="example-link">#kanji</a>
+                <a class="example-link">*家</a>
+            </div>
+        </div>
+
+        <div class="results-header">
+            <h3>Search Results</h3>
+            <span class="results-count" id="resultCount">10 results</span>
+        </div>
+
+        <table id="dictionaryTable">
+            <thead>
+                <tr><th>Japanese</th><th>English</th></tr>
+            </thead>
+            <tbody id="dictionaryBody">
+                <!-- Populated by script -->
+            </tbody>
+        </table>
+        <div id="noResultsMessage" class="no-results" style="display: none;">No matching words found. Try another search.</div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Learn Japanese</p>
+    </footer>
+    <script src="data.js"></script>
+    <script>
+        // Enhanced dictionary script for Jisho-like functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const tbody = document.getElementById('dictionaryBody');
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const resultCountSpan = document.getElementById('resultCount');
+            const noResultsDiv = document.getElementById('noResultsMessage');
+
+            // Your existing dictionaryData from data.js
+            // Ensure dictionaryData is available (from data.js)
+            if (typeof dictionaryData === 'undefined') {
+                console.error('dictionaryData not loaded. Make sure data.js is included.');
+                return;
+            }
+
+            function renderDictionary(filter = '') {
+                tbody.innerHTML = '';
+                const filtered = dictionaryData.filter(item =>
+                    item.japanese.includes(filter) || 
+                    item.english.toLowerCase().includes(filter.toLowerCase())
+                );
+
+                if (filtered.length === 0) {
+                    noResultsDiv.style.display = 'block';
+                    resultCountSpan.textContent = '0 results';
+                } else {
+                    noResultsDiv.style.display = 'none';
+                    resultCountSpan.textContent = `${filtered.length} result${filtered.length > 1 ? 's' : ''}`;
+                    
+                    filtered.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td class="japanese-word">${item.japanese}</td><td>${item.english}</td>`;
+                        tbody.appendChild(row);
+                    });
+                }
+            }
+
+            // Initial render
+            renderDictionary();
+
+            function performSearch() {
+                renderDictionary(searchInput.value.trim());
+            }
+
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Example search links
+            document.querySelectorAll('.example-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    searchInput.value = e.target.textContent;
+                    performSearch();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

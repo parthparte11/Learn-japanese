@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanji</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>にほんご</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="writing.html">Writing</a></li>
+                <li><a href="dictionary.html">Dictionary</a></li>
+                <li><a href="kanji.html">Kanji</a></li>
+                <li><a href="test.html">Test</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Kanji</h2>
+        <table id="kanjiTable">
+            <thead>
+                <tr><th>Kanji</th><th>Meaning</th><th>Kunyomi</th><th>Onyomi</th></tr>
+            </thead>
+            <tbody id="kanjiBody">
+                <!-- Populated by script -->
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2025 Learn Japanese</p>
+    </footer>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
